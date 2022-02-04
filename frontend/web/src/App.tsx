@@ -1,8 +1,10 @@
-import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+import { Sample } from '@klic-weather-station/backend';
+
 function App() {
+  console.log(Sample.foo());
   return (
     <div className='App'>
       <header className='App-header'>

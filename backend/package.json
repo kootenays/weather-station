@@ -1,6 +1,7 @@
 {
   "name": "@klic-weather-station/backend",
   "version": "0.0.1",
+  "main": "core/index",
   "scripts": {
     "script": "esr",
     "test": "jest"
