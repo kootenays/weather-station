@@ -1,1 +1,1 @@
-export * as Sample from "./sample";
+export * as Sample from './sample';

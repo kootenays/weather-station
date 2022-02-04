@@ -1,3 +1,3 @@
-import { Sample } from "@klic-weather-station/core";
+import { Sample } from '@klic-weather-station/core';
 
 console.log(Sample.foo());
