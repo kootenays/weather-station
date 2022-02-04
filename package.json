@@ -1,0 +1,34 @@
+{
+  "name": "weather-station-backend",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "sst:start": "sst start",
+    "sst:build": "sst build",
+    "sst:deploy": "sst deploy",
+    "sst:remove": "sst remove",
+    "prepare": "husky install"
+  },
+  "workspaces": [
+    "backend",
+    "web/*"
+  ],
+  "eslintConfig": {
+    "extends": [
+      "serverless-stack"
+    ]
+  },
+  "devDependencies": {
+    "@serverless-stack/cli": "0.61.0",
+    "@serverless-stack/resources": "0.61.0",
+    "@tsconfig/node14": "^1.0.1",
+    "@types/aws-lambda": "^8.10.70",
+    "@types/node": "<15.0.0",
+    "aws-cdk-lib": "2.7.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.3",
+    "prettier": "^2.5.1"
+  },
+  "dependencies": {}
+}

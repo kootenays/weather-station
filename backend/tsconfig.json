@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "include": ["core", "services", "scripts"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@klic-weather-station/core": ["core"]
+    }
+  }
+}
