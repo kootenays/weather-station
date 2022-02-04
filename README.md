@@ -1,6 +1,8 @@
-# Getting Started with Serverless Stack (SST)
+# KLIC Weather Station
 
-This project was bootstrapped with [Create Serverless Stack](https://docs.serverless-stack.com/packages/create-serverless-stack).
+This is a project to receive data from physical weather station(s) via MQTT and then publish it into a database and display the results onto a React App.
+
+# Getting Started
 
 Start by installing the dependencies.
 
@@ -32,14 +34,10 @@ Remove all your stacks and all of their resources from AWS. Or optionally remove
 
 Runs your tests using Jest. Takes all the [Jest CLI options](https://jestjs.io/docs/en/cli).
 
-## Documentation
+## SST Documentation
 
 Learn more about the Serverless Stack.
 
 - [Docs](https://docs.serverless-stack.com)
 - [@serverless-stack/cli](https://docs.serverless-stack.com/packages/cli)
 - [@serverless-stack/resources](https://docs.serverless-stack.com/packages/resources)
-
-## Community
-
-[Follow us on Twitter](https://twitter.com/ServerlessStack) or [post on our forums](https://discourse.serverless-stack.com).
