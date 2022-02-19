@@ -6,9 +6,7 @@
     "script": "esr",
     "test": "jest"
   },
-  "dependencies": {
-    "@types/aws-lambda": "^8.10.92"
-  },
+  "dependencies": {},
   "devDependencies": {
     "esbuild-runner": "^2.2.1"
   }
