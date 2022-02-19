@@ -1,0 +1,15 @@
+{
+  "name": "@klic-weather-station/backend",
+  "version": "0.0.1",
+  "main": "core/index",
+  "scripts": {
+    "script": "esr",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@types/aws-lambda": "^8.10.92"
+  },
+  "devDependencies": {
+    "esbuild-runner": "^2.2.1"
+  }
+}
