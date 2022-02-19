@@ -4,10 +4,10 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "sst:start": "AWS_PROFILE=klic-dev sst start",
-    "sst:build": "AWS_PROFILE=klic-dev sst build",
-    "sst:deploy": "AWS_PROFILE=klic-dev sst deploy",
-    "sst:remove": "AWS_PROFILE=klic-dev sst remove",
+    "sst:start": "AWS_PROFILE=klic-dev sst start --stage dev",
+    "sst:build": "AWS_PROFILE=klic-dev sst build --stage dev",
+    "sst:deploy": "AWS_PROFILE=klic-dev sst deploy --stage dev",
+    "sst:remove": "AWS_PROFILE=klic-dev sst remove --stage dev",
     "prepare": "husky install",
     "prettier": "prettier --write --ignore-unknown"
   },
@@ -27,9 +27,9 @@
     "@types/aws-lambda": "^8.10.70",
     "@types/node": "<15.0.0",
     "aws-cdk-lib": "2.7.0",
-    "husky": "^7.0.4",
-    "lerna": "^4.0.0",
-    "lint-staged": "^12.3.3",
-    "prettier": "^2.5.1"
+    "husky": "7.0.4",
+    "lerna": "4.0.0",
+    "lint-staged": "12.3.4",
+    "prettier": "2.5.1"
   }
 }
