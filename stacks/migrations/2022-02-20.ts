@@ -5,8 +5,6 @@ import {
   DEFAULT_USERS_TABLE_NAME,
 } from '../../backend';
 
-const SENSORS_DATA_TABLE_NAME = 'sensor_data';
-
 // Not sure where this is coming from but @thdxr mentioned to use this instead of the
 // sql import from Kysely
 interface KyselyWithRaw extends Kysely<any> {
@@ -24,10 +22,10 @@ const createBaseTable = (db: KyselyWithRaw, tableName: string) => {
       col.primaryKey().defaultTo(db.raw('gen_random_uuid()'))
     )
     .addColumn('created_at', 'timestamptz', (col) =>
-      col.defaultTo('NOW()').notNull()
+      col.defaultTo(db.raw('NOW()')).notNull()
     )
     .addColumn('updated_at', 'timestamptz', (col) =>
-      col.defaultTo('NOW()').notNull()
+      col.defaultTo(db.raw('NOW()')).notNull()
     )
     .addColumn('created_by', 'uuid', (col) =>
       col.references(`${DEFAULT_USERS_TABLE_NAME}.id`)

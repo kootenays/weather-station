@@ -1,6 +1,9 @@
 import { ColumnType, Generated, Insertable } from 'kysely';
 import { DateTime } from 'luxon';
 
+/** Set field as nullable */
+export type Nullable<TField> = TField | null;
+
 export type BaseEntity = {
   /** The id of this entity, should be a v4 UUID */
   id: Generated<string>;

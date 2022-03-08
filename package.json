@@ -4,11 +4,11 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "presst:start": "stacks/migrations/esbuild.config.js",
+    "presst:start": "rm -rf stacks/migrations/dist && stacks/migrations/esbuild.config.js",
     "sst:start": "AWS_PROFILE=klic-dev sst start --stage dev",
-    "presst:build": "stacks/migrations/esbuild.config.js",
+    "presst:build": "rm -rf stacks/migrations/dist && stacks/migrations/esbuild.config.js",
     "sst:build": "AWS_PROFILE=klic-dev sst build --stage dev",
-    "presst:deploy": "stacks/migrations/esbuild.config.js",
+    "presst:deploy": "rm -rf stacks/migrations/dist && stacks/migrations/esbuild.config.js",
     "sst:deploy": "AWS_PROFILE=klic-dev sst deploy --stage dev",
     "sst:remove": "AWS_PROFILE=klic-dev sst remove --stage dev",
     "sst:console": "AWS_PROFILE=klic-dev sst console --stage dev",
@@ -40,7 +40,10 @@
     "typescript": "^4.5.5"
   },
   "dependencies": {
+    "@aws-cdk/aws-iot-actions-alpha": "2.7.0-alpha.0",
+    "@aws-cdk/aws-iot-alpha": "2.7.0-alpha.0",
     "kysely": "0.17.1",
+    "kysely-data-api": "^0.0.9",
     "luxon": "^2.3.1"
   }
 }

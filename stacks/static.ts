@@ -1,4 +1,12 @@
-import { App, RDS, Stack, StackProps } from '@serverless-stack/resources';
+import { LambdaFunctionAction } from '@aws-cdk/aws-iot-actions-alpha';
+import { IotSql, TopicRule } from '@aws-cdk/aws-iot-alpha';
+import {
+  App,
+  Function,
+  RDS,
+  Stack,
+  StackProps,
+} from '@serverless-stack/resources';
 import { RemovalPolicy } from 'aws-cdk-lib';
 
 const DATABASE_NAME = 'WeatherStationDatabase';
@@ -13,9 +21,9 @@ export class StaticStack extends Stack {
 
     const isProd = scope.stage === 'prod';
 
-    /**
+    /*************************************************************************
      * Database cluster
-     */
+     *************************************************************************/
     const cluster = new RDS(this, 'RDSCluster', {
       engine: 'postgresql10.14',
       defaultDatabaseName: DATABASE_NAME,
@@ -26,11 +34,27 @@ export class StaticStack extends Stack {
       },
     });
 
-    /**
+    /*************************************************************************
      * AWS IoT
-     * TODO:
-     * - Create a rule to forward to a Lambda function
-     * - That Lambda function should receive the data and save it into Postgres
-     */
+     *************************************************************************/
+    // Lambda function to handle any incoming message(s)
+    const mqttHandlerFn = new Function(this, 'MQTTHandlerFn', {
+      handler: 'services/mqtt/index.handler',
+      environment: {
+        DATABASE_NAME,
+        DATABASE_CLUSTER_ARN: cluster.clusterArn,
+        DATABASE_SECRET_ARN: cluster.secretArn,
+      },
+      permissions: [cluster],
+    });
+
+    // The topic rule to forward the MQTT data into the provided handler
+    new TopicRule(this, 'DBInsertRule', {
+      description: 'Insert sensor data into the database instance',
+      sql: IotSql.fromStringAsVer20160323(
+        "SELECT topic(2) as device_id, timestamp() as timestamp, * FROM 'device/+/data'"
+      ),
+      actions: [new LambdaFunctionAction(mqttHandlerFn)],
+    });
   }
 }

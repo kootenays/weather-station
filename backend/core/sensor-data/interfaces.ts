@@ -1,4 +1,4 @@
-import { ColumnType } from 'kysely';
+import { ColumnType, RawBuilder } from 'kysely';
 import { BaseEntity } from '../base';
 
 /** Sensor data should be able to be updated */
@@ -6,9 +6,9 @@ type Unupdateable<TValue = number> = ColumnType<TValue, TValue | null, null>;
 
 export type SensorData = BaseEntity & {
   /** The device that provided this data */
-  device_id: string;
+  device_id: ColumnType<string, string | RawBuilder, null>;
   /** The timestamp that this sensor data is for */
-  timestamp: string;
+  timestamp: ColumnType<string, number | string | RawBuilder, null>;
   /**
    * The humidity data recorded. In % so save it as 10 for 10%
    */

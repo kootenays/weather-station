@@ -1,4 +1,3 @@
-import { Generated } from 'kysely';
 import { BaseEntity } from '../base';
 
 export type Device = BaseEntity & {

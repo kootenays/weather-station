@@ -39,6 +39,18 @@
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-appsync-alpha/-/aws-appsync-alpha-2.7.0-alpha.0.tgz#513f54798e39fad5ba23c69741f4a2e8d78cfadd"
   integrity sha512-4XyRBZG+hlAmyYv+xTJ1picE3eR9ImdbLpm/znde56/lOqOVBryP/h8xXL3EOAbOknqp7cnXAnjgV7BUOxLOdQ==
 
+"@aws-cdk/aws-iot-actions-alpha@2.7.0-alpha.0":
+  version "2.7.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-iot-actions-alpha/-/aws-iot-actions-alpha-2.7.0-alpha.0.tgz#0dcb2465690de97a2d0e76717eaf051d32f19540"
+  integrity sha512-m9IRPAOi7oXreYEPij0U+ebv9SD8vh6ELsAJ9brHjdkn2s0r0v1z3GSwIGReDOywc78O3mHxhKTm2E6DJjnY/A==
+  dependencies:
+    case "1.6.3"
+
+"@aws-cdk/aws-iot-alpha@2.7.0-alpha.0":
+  version "2.7.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-iot-alpha/-/aws-iot-alpha-2.7.0-alpha.0.tgz#7a7b5295ad9a13081cb218504a595ef886d515ed"
+  integrity sha512-i3hSWSOvHH/yykqoN3grwpdG8399eZ4+cpNc7NAVYl+OsVQ47SAj2X/jHFR1AWaLGlzjNNY7ubSoC570AsXu/g==
+
 "@aws-cdk/cfnspec@2.7.0":
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/cfnspec/-/cfnspec-2.7.0.tgz#0bd5937b805ad3335189340a90803617a9900e7f"
@@ -8986,6 +8998,11 @@ klona@^2.0.4, klona@^2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/klona/-/klona-2.0.5.tgz#d166574d90076395d9963aa7a928fabb8d76afbc"
   integrity sha512-pJiBpiXMbt7dkzXe8Ghj/u4FfXOOa98fPW+bihOJ4SjnoijweJrNThJfd3ifXpXhREjpoF2mZVH1GfS9LV3kHQ==
+
+kysely-data-api@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/kysely-data-api/-/kysely-data-api-0.0.9.tgz#11782b937491ce63a02683d1fe6781b26933ff1c"
+  integrity sha512-kpNV3BglE0yqkKJa4D5C7U3aOvWADZJ6UXEbFuM1xMZMzwaa878yIS0baWIt1gfsWEx5d9aNefnW5rhzC+2cKQ==
 
 kysely@0.17.1:
   version "0.17.1"
