@@ -8,29 +8,33 @@ import {
   StackProps,
 } from '@serverless-stack/resources';
 import { RemovalPolicy } from 'aws-cdk-lib';
+import { isProd } from './helpers';
 
-const DATABASE_NAME = 'WeatherStationDatabase';
+export const DATABASE_NAME = 'WeatherStationDatabase';
 
 /**
  * The Static Stack is a stack that contains all static infrastructure that
  * generally speaking does not change often. For example, databases.
  */
 export class StaticStack extends Stack {
+  /** The RDS PostgresSQL Database Cluster */
+  public readonly rdsCluster: RDS;
+
   constructor(scope: App, props?: StackProps) {
     super(scope, 'StatickStack', props);
-
-    const isProd = scope.stage === 'prod';
 
     /*************************************************************************
      * Database cluster
      *************************************************************************/
-    const cluster = new RDS(this, 'RDSCluster', {
+    this.rdsCluster = new RDS(this, 'RDSCluster', {
       engine: 'postgresql10.14',
       defaultDatabaseName: DATABASE_NAME,
       migrations: 'stacks/migrations/dist',
       rdsServerlessCluster: {
         // Unless it is in a production environment, always destroy it
-        removalPolicy: isProd ? RemovalPolicy.SNAPSHOT : RemovalPolicy.DESTROY,
+        removalPolicy: isProd(scope)
+          ? RemovalPolicy.SNAPSHOT
+          : RemovalPolicy.DESTROY,
       },
     });
 
@@ -42,10 +46,10 @@ export class StaticStack extends Stack {
       handler: 'services/mqtt/index.handler',
       environment: {
         DATABASE_NAME,
-        DATABASE_CLUSTER_ARN: cluster.clusterArn,
-        DATABASE_SECRET_ARN: cluster.secretArn,
+        DATABASE_CLUSTER_ARN: this.rdsCluster.clusterArn,
+        DATABASE_SECRET_ARN: this.rdsCluster.secretArn,
       },
-      permissions: [cluster],
+      permissions: [this.rdsCluster],
     });
 
     // The topic rule to forward the MQTT data into the provided handler
