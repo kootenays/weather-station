@@ -76,14 +76,14 @@ export class DatabaseTable<
     const values = this.beforeDBTransform({
       ...(item as any),
       // Set the audit values
-      updated_at: DateTime.local().toISO(),
-      updated_by: actorId,
+      updated_at: sql`${DateTime.local().toISO()}::timestamptz`,
+      updated_by: actorId ? sql`${actorId}::uuid` : null,
     });
 
     const res = await this.kysely
       .updateTable(this.tableName)
       .set(values as MutationObject<TDatabase, TTableName>)
-      .where('id', '=', id as any)
+      .where('id', '=', sql`${id}::uuid` as any)
       .returningAll()
       .executeTakeFirst();
 

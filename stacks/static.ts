@@ -56,7 +56,7 @@ export class StaticStack extends Stack {
     new TopicRule(this, 'DBInsertRule', {
       description: 'Insert sensor data into the database instance',
       sql: IotSql.fromStringAsVer20160323(
-        "SELECT topic(2) as device_id, timestamp() as timestamp, * FROM 'device/+/data'"
+        "SELECT topic(2) as device_id, timestamp() as timestamp, * FROM 'devices/+/data'"
       ),
       actions: [new LambdaFunctionAction(mqttHandlerFn)],
     });
