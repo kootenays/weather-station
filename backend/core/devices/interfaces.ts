@@ -9,4 +9,8 @@ export type Device = BaseEntity & {
   point: string | null;
   /** The elevation for this device */
   elevation: number | null;
+  /** The ARN of the Thing in AWS IoT */
+  aws_thing_arn: string | null;
+  /** The Id of the Thing in AWS IoT */
+  aws_thing_id: string | null;
 };

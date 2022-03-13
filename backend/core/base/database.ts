@@ -91,6 +91,19 @@ export class DatabaseTable<
   }
 
   /**
+   * Delete an item from the table
+   * @param id The id of the item to delete
+   */
+  async delete(id: string) {
+    const res = await this.kysely
+      .deleteFrom(this.tableName)
+      .where('id', '=', sql`${id}::uuid`)
+      .execute();
+
+    return res;
+  }
+
+  /**
    * Get an item from the table
    * @param id the id of the item to get
    */
@@ -123,9 +136,9 @@ export class DatabaseTable<
    * before it gets inserted back in, or updated.
    * @param item The item to push in
    */
-  beforeDBTransform<TAfterItem extends Updateable<TDatabase[TTableName]>>(
-    item: TItem
-  ): TAfterItem {
+  private beforeDBTransform<
+    TAfterItem extends Updateable<TDatabase[TTableName]>
+  >(item: TItem): TAfterItem {
     return item as any as TAfterItem;
   }
 
@@ -134,7 +147,7 @@ export class DatabaseTable<
    * the interface as required for usage
    * @param databaseItem The raw database item
    */
-  afterDBTransform(
+  private afterDBTransform(
     databaseItem: Awaited<Selectable<TDatabase[TTableName]>>
   ): TItem {
     return databaseItem as any as TItem;

@@ -1,39 +1,10 @@
-import type { Kysely, Sql } from 'kysely';
 import {
   DEFAULT_DEVICES_TABLE_NAME,
   DEFAULT_SENSOR_DATA_TABLE_NAME,
   DEFAULT_USERS_TABLE_NAME,
 } from '../../backend';
-
-// Not sure where this is coming from but @thdxr mentioned to use this instead of the
-// sql import from Kysely
-interface KyselyWithRaw extends Kysely<any> {
-  raw: Sql['raw'];
-}
-
-/**
- * A helper to add the default audit columns to the database table
- */
-const createBaseTable = (db: KyselyWithRaw, tableName: string) => {
-  return db.schema
-    .createTable(tableName)
-    .ifNotExists()
-    .addColumn('id', 'uuid', (col) =>
-      col.primaryKey().defaultTo(db.raw('gen_random_uuid()'))
-    )
-    .addColumn('created_at', 'timestamptz', (col) =>
-      col.defaultTo(db.raw('NOW()')).notNull()
-    )
-    .addColumn('updated_at', 'timestamptz', (col) =>
-      col.defaultTo(db.raw('NOW()')).notNull()
-    )
-    .addColumn('created_by', 'uuid', (col) =>
-      col.references(`${DEFAULT_USERS_TABLE_NAME}.id`)
-    )
-    .addColumn('updated_by', 'uuid', (col) =>
-      col.references(`${DEFAULT_USERS_TABLE_NAME}.id`)
-    );
-};
+import { createBaseTable } from './helpers';
+import { KyselyWithRaw } from './interfaces';
 
 export async function up(db: KyselyWithRaw): Promise<void> {
   // Add the postgis extension so we can use Point DataType and do geoqueries
