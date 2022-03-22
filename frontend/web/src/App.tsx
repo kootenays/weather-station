@@ -1,26 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
-
-import { Sample } from '@klic-weather-station/backend';
+import { Sample } from '@klic-weather-station/backend/core/sample';
+import { Auth0Provider } from '@auth0/auth0-react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HomePage, Layout, LoginPage, PublicPage, RequireAuth } from './pages';
 
 function App() {
   console.log(Sample.foo());
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'>
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Auth0Provider
+        domain={process.env.REACT_APP_AUTH0_DOMAIN || ''}
+        clientId={process.env.REACT_APP_AUTH0_CLIENT_ID || ''}
+        redirectUri={window.location.origin}>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path='/' element={<PublicPage />} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route
+              path='/protected'
+              element={
+                <RequireAuth>
+                  <HomePage />
+                </RequireAuth>
+              }
+            />
+          </Route>
+        </Routes>
+      </Auth0Provider>
+    </BrowserRouter>
   );
 }
 
