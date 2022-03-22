@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { PrivateRoutes, PrivateRouteWrapper } from './private';
+import { PrivateLayout, PrivateRoutes } from './private';
 import { PublicRoutes } from './public';
 
 export const Pages: React.FC = () => {
@@ -8,7 +8,7 @@ export const Pages: React.FC = () => {
       {PublicRoutes.map((props, index) => (
         <Route key={props.path || index} {...props} />
       ))}
-      <Route path='admin' element={<PrivateRouteWrapper />}>
+      <Route path='admin' element={<PrivateLayout />}>
         {PrivateRoutes.map((props, index) => (
           <Route key={props.path || index} {...props} />
         ))}

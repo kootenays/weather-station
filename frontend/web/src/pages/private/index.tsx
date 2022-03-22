@@ -5,4 +5,4 @@ export const PrivateRoutes: RouteProps[] = [
   { index: true, element: <HomePage /> },
 ];
 
-export { PrivateRouteWrapper } from './wrapper';
+export { PrivateLayout } from './layout';
