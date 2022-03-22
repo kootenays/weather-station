@@ -22,7 +22,7 @@ cdk.context.json
 
 # environments
 .env*.local
-.env*
+.env.*
 
 npm-debug.log*
 yarn-debug.log*
