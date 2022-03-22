@@ -1,7 +1,7 @@
 import { APIGatewayProxyHandlerV2WithJWTAuthorizer } from 'aws-lambda';
-import { DevicesTable } from 'core/devices';
 import { Iot } from 'aws-sdk';
 import { sql } from 'kysely';
+import { DevicesTable } from 'core/devices';
 
 const DevicesClient = new DevicesTable();
 const IotClient = new Iot();
@@ -10,13 +10,24 @@ const IotClient = new Iot();
  * Create a device in the database as well as a related AWS IoT Thing. If the
  * thing creation fails, it should then remove the database entry as well.
  */
-export const main: APIGatewayProxyHandlerV2WithJWTAuthorizer = async () => {
+export const main: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (evt) => {
+  const body: { name?: string; user_id?: string } =
+    (evt.body && JSON.parse(evt.body)) || {};
+
+  if (!body.name || !body.user_id) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: 'Unable to create without a name or user_id specified.',
+      }),
+    };
+  }
+
   // Create a device in the database
   const device = await DevicesClient.create(
     {
-      name: 'Test Device',
-      user_id:
-        sql`'c9f4c0c9-01df-4f1e-985e-e2f946dc3ac3'::uuid` as any as string,
+      name: body.name,
+      user_id: sql`${body.user_id}::uuid` as any as string,
     },
     null
   );

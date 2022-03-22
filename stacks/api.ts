@@ -74,7 +74,6 @@ export class ApiStack extends Stack {
           handler: 'services/devices/create.main',
           permissions: ['iot:CreateThing'],
         },
-        authorizationType: ApiAuthorizationType.NONE,
       },
       // Create a certificate for a device
       'POST /devices/{device_id}/certificates': {
@@ -87,7 +86,6 @@ export class ApiStack extends Stack {
             'iot:CreatePolicy',
           ],
         },
-        authorizationType: ApiAuthorizationType.NONE,
       },
       // Example for a public endpoint that does not require authentication
       'GET /devices/{device_id}/data': {
