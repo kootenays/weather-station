@@ -70,7 +70,22 @@ export class ApiStack extends Stack {
 
     api.addRoutes(this, {
       'POST /devices': {
-        function: { handler: 'services/devices/create.main' },
+        function: {
+          handler: 'services/devices/create.main',
+          permissions: ['iot:CreateThing'],
+        },
+      },
+      // Create a certificate for a device
+      'POST /devices/{device_id}/certificates': {
+        function: {
+          handler: 'services/devices/create-certificate.main',
+          permissions: [
+            'iot:AttachPolicy',
+            'iot:AttachThingPrincipal',
+            'iot:CreateKeysAndCertificate',
+            'iot:CreatePolicy',
+          ],
+        },
       },
       // Example for a public endpoint that does not require authentication
       'GET /devices/{device_id}/data': {

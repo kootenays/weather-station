@@ -33,7 +33,7 @@ export class DatabaseTable<
      *    to ISO string before sending to the database and then re-transform back
      *    to the DateTime object when it comes back. (See the camelCase plugin for
      *    inspiration), we can do this for any fields that ends with `_at`.
-     *  - May also need the same with UUIDs for id fields
+     *  - May also need the same with UUIDs for id or `_id` fields
      */
   }
 
@@ -76,18 +76,31 @@ export class DatabaseTable<
     const values = this.beforeDBTransform({
       ...(item as any),
       // Set the audit values
-      updated_at: DateTime.local().toISO(),
-      updated_by: actorId,
+      updated_at: sql`${DateTime.local().toISO()}::timestamptz`,
+      updated_by: actorId ? sql`${actorId}::uuid` : null,
     });
 
     const res = await this.kysely
       .updateTable(this.tableName)
       .set(values as MutationObject<TDatabase, TTableName>)
-      .where('id', '=', id as any)
+      .where('id', '=', sql`${id}::uuid` as any)
       .returningAll()
       .executeTakeFirst();
 
     return this.afterDBTransform(res as any);
+  }
+
+  /**
+   * Delete an item from the table
+   * @param id The id of the item to delete
+   */
+  async delete(id: string) {
+    const res = await this.kysely
+      .deleteFrom(this.tableName)
+      .where('id', '=', sql`${id}::uuid`)
+      .execute();
+
+    return res;
   }
 
   /**
@@ -123,9 +136,9 @@ export class DatabaseTable<
    * before it gets inserted back in, or updated.
    * @param item The item to push in
    */
-  beforeDBTransform<TAfterItem extends Updateable<TDatabase[TTableName]>>(
-    item: TItem
-  ): TAfterItem {
+  private beforeDBTransform<
+    TAfterItem extends Updateable<TDatabase[TTableName]>
+  >(item: TItem): TAfterItem {
     return item as any as TAfterItem;
   }
 
@@ -134,7 +147,7 @@ export class DatabaseTable<
    * the interface as required for usage
    * @param databaseItem The raw database item
    */
-  afterDBTransform(
+  private afterDBTransform(
     databaseItem: Awaited<Selectable<TDatabase[TTableName]>>
   ): TItem {
     return databaseItem as any as TItem;

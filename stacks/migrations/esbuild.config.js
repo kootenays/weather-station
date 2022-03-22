@@ -4,7 +4,12 @@ const fs = require('fs');
 
 const files = fs
   .readdirSync(__dirname)
-  .filter((val) => val.endsWith('ts'))
+  .filter(
+    (val) =>
+      val.endsWith('ts') &&
+      !val.includes('helpers') &&
+      !val.includes('interfaces')
+  )
   .map((val) => path.join(__dirname, val));
 
 require('esbuild')
