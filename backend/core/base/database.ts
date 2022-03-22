@@ -33,7 +33,7 @@ export class DatabaseTable<
      *    to ISO string before sending to the database and then re-transform back
      *    to the DateTime object when it comes back. (See the camelCase plugin for
      *    inspiration), we can do this for any fields that ends with `_at`.
-     *  - May also need the same with UUIDs for id fields
+     *  - May also need the same with UUIDs for id or `_id` fields
      */
   }
 
