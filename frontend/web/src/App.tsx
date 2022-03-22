@@ -1,26 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
-
-import { Sample } from '@klic-weather-station/backend';
+import { Auth0Provider } from '@auth0/auth0-react';
+import { BrowserRouter } from 'react-router-dom';
+import { Pages } from './pages';
 
 function App() {
-  console.log(Sample.foo());
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'>
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Auth0Provider
+        domain={process.env.REACT_APP_AUTH0_DOMAIN || ''}
+        clientId={process.env.REACT_APP_AUTH0_CLIENT_ID || ''}
+        redirectUri={window.location.origin}
+        cacheLocation='localstorage'
+        useRefreshTokens>
+        <Pages />
+      </Auth0Provider>
+    </BrowserRouter>
   );
 }
 
