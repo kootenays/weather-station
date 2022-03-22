@@ -1,6 +1,6 @@
 import { Auth0Provider } from '@auth0/auth0-react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { PublicRoutes, PrivateRouteWrapper, PrivateRoutes } from './pages';
+import { BrowserRouter } from 'react-router-dom';
+import { Pages } from './pages';
 
 function App() {
   return (
@@ -11,17 +11,7 @@ function App() {
         redirectUri={window.location.origin}
         cacheLocation='localstorage'
         useRefreshTokens>
-        <Routes>
-          {PublicRoutes.map((props, index) => (
-            <Route key={props.path || index} {...props} />
-          ))}
-          <Route path='admin' element={<PrivateRouteWrapper />}>
-            {PrivateRoutes.map((props, index) => (
-              <Route key={props.path || index} {...props} />
-            ))}
-          </Route>
-          <Route path='*' element={<div>Unknown page...</div>} />
-        </Routes>
+        <Pages />
       </Auth0Provider>
     </BrowserRouter>
   );
