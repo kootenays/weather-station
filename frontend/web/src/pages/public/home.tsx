@@ -1,7 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
 
-function AuthStatus() {
+export function AuthStatus() {
   let { isAuthenticated, user, logout } = useAuth0();
 
   if (!isAuthenticated) {
@@ -21,20 +20,11 @@ function AuthStatus() {
   );
 }
 
-export function Layout() {
+export const HomePage: React.FC = () => {
   return (
     <div>
+      This is the home page.
       <AuthStatus />
-      <ul>
-        <li>
-          <Link to='/'>Public Page</Link>
-        </li>
-        <li>
-          <Link to='/protected'>Protected Page</Link>
-        </li>
-      </ul>
-
-      <Outlet />
     </div>
   );
-}
+};

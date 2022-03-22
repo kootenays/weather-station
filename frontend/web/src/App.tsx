@@ -1,29 +1,26 @@
-import { Sample } from '@klic-weather-station/backend/core/sample';
 import { Auth0Provider } from '@auth0/auth0-react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { HomePage, Layout, LoginPage, PublicPage, RequireAuth } from './pages';
+import { PublicRoutes, PrivateRouteWrapper, PrivateRoutes } from './pages';
 
 function App() {
-  console.log(Sample.foo());
   return (
     <BrowserRouter>
       <Auth0Provider
         domain={process.env.REACT_APP_AUTH0_DOMAIN || ''}
         clientId={process.env.REACT_APP_AUTH0_CLIENT_ID || ''}
-        redirectUri={window.location.origin}>
+        redirectUri={window.location.origin}
+        cacheLocation='localstorage'
+        useRefreshTokens>
         <Routes>
-          <Route element={<Layout />}>
-            <Route path='/' element={<PublicPage />} />
-            <Route path='/login' element={<LoginPage />} />
-            <Route
-              path='/protected'
-              element={
-                <RequireAuth>
-                  <HomePage />
-                </RequireAuth>
-              }
-            />
+          {PublicRoutes.map((props, index) => (
+            <Route key={props.path || index} {...props} />
+          ))}
+          <Route path='admin' element={<PrivateRouteWrapper />}>
+            {PrivateRoutes.map((props, index) => (
+              <Route key={props.path || index} {...props} />
+            ))}
           </Route>
+          <Route path='*' element={<div>Unknown page...</div>} />
         </Routes>
       </Auth0Provider>
     </BrowserRouter>

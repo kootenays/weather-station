@@ -1,12 +1,11 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 export function LoginPage() {
-  let navigate = useNavigate();
-  let location = useLocation();
+  const location = useLocation();
   const { isAuthenticated, loginWithRedirect } = useAuth0();
 
-  let from = (location.state as any)?.from?.pathname || '/';
+  const from = (location.state as any)?.from?.pathname || '/';
 
   return (
     (!isAuthenticated && (
