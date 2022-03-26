@@ -2,6 +2,7 @@ import { RefreshRounded, VpnKeyRounded } from '@mui/icons-material';
 import { Box, Button, Typography } from '@mui/material';
 import { DateTime } from 'luxon';
 import { TableCard } from '../../../../components';
+import { PrivateApi } from '../../../../state';
 
 // Fake data until real one is shown
 const data = Array.from(Array(5)).map((_, index) => ({
@@ -22,6 +23,10 @@ const data = Array.from(Array(5)).map((_, index) => ({
  * as well as see the sensor data coming through.
  */
 export const DeviceDetailPage: React.FC = () => {
+  const onClick = async () => {
+    const res = await PrivateApi.get('devices');
+    console.log(res);
+  };
   return (
     <div>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -29,7 +34,11 @@ export const DeviceDetailPage: React.FC = () => {
           Device 1
         </Typography>
         <div>
-          <Button variant='outlined' color='info' startIcon={<VpnKeyRounded />}>
+          <Button
+            variant='outlined'
+            color='info'
+            startIcon={<VpnKeyRounded />}
+            onClick={onClick}>
             Generate new keys
           </Button>
         </div>
