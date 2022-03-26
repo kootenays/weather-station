@@ -22,6 +22,7 @@ export const DeviceListPage: React.FC = () => {
   const [devices, setDevices] = useState<Device[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
+  // Load data on mount
   useEffect(() => {
     onLoadDevices();
     // eslint-disable-next-line react-hooks/exhaustive-deps

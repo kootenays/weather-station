@@ -24,6 +24,8 @@ export class SensorDataTable extends DatabaseTable<
       .selectFrom(this.tableName)
       .selectAll()
       .where('device_id', '=', sql`${deviceId}::uuid`)
+      .orderBy('timestamp', 'desc')
+      .limit(25)
       .execute();
 
     return res.map(this.afterDBTransform);

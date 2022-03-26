@@ -36,6 +36,15 @@ export const main: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
       }),
     };
 
+  if (!device.aws_thing_arn || !device.aws_thing_id) {
+    return {
+      statusCode: 404,
+      body: JSON.stringify({
+        message: 'This device does not exist in AWS IoT',
+      }),
+    };
+  }
+
   // Create the certificate
   const certificate = await IotClient.createKeysAndCertificate({
     setAsActive: true,

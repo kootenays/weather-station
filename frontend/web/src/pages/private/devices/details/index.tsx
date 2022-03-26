@@ -19,8 +19,10 @@ export const DeviceDetailPage: React.FC = () => {
   const [data, setData] = useState<SensorData[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
+  // Load data on mount
   useEffect(() => {
     onLoadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onLoadData = async () => {

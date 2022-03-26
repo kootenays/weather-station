@@ -3,7 +3,7 @@ import { SensorDataTable } from 'core/sensor-data';
 
 const SensorDataClient = new SensorDataTable();
 
-export const main: APIGatewayProxyHandlerV2 = async (event, context) => {
+export const main: APIGatewayProxyHandlerV2 = async (event) => {
   const deviceId = event.pathParameters?.device_id;
 
   if (!deviceId) {

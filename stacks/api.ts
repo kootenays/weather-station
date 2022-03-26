@@ -90,7 +90,7 @@ export class ApiStack extends Stack {
           ],
         },
       },
-      // Example for a public endpoint that does not require authentication
+      // List the sensor data for a device
       'GET /devices/{device_id}/data': {
         function: { handler: 'services/devices/data.main' },
         authorizationType: ApiAuthorizationType.NONE,
