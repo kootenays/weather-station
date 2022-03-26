@@ -1,10 +1,11 @@
 import { RouteProps } from 'react-router-dom';
-import { DeviceListPage } from './devices';
+import { DeviceDetailPage, DeviceListPage } from './devices';
 import { HomePage } from './home';
 
 export const PrivateRoutes: RouteProps[] = [
   { index: true, element: <HomePage /> },
   { path: 'devices', element: <DeviceListPage /> },
+  { path: 'devices/:id', element: <DeviceDetailPage /> },
 ];
 
 export { PrivateLayout } from './layout';
