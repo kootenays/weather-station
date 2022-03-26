@@ -41,7 +41,7 @@ ApplicationTheme.components = {
     styleOverrides: {
       root: {
         // Remove extra border
-        ['&:before']: { content: 'none' },
+        '&:before': { content: 'none' },
         // Remove bg color when disabled
         [`&.${accordionClasses.disabled}`]: {
           backgroundColor: 'inherit',
@@ -89,6 +89,13 @@ ApplicationTheme.components = {
               fontWeight: theme.typography.fontWeightMedium,
             }
           : { fontWeight: theme.typography.fontWeightMedium },
+    },
+  },
+  MuiDataGrid: {
+    styleOverrides: {
+      root: { borderRadius: 0, minHeight: 300, height: '100%' },
+      cell: { '&:focus': { outline: 'none' } },
+      columnSeparator: { display: 'none' },
     },
   },
   // Make sure inputs change their height when their in a grid/table, so that

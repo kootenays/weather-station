@@ -1,3 +1,5 @@
+import type {} from '@mui/x-data-grid/themeAugmentation';
+
 // Add extra color to the theme.
 declare module '@mui/material/styles' {
   interface Palette {
@@ -21,5 +23,3 @@ declare module '@mui/material/Paper' {
     'outlined-elevation': true;
   }
 }
-
-export {};
