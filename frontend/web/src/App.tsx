@@ -1,6 +1,8 @@
 import { Auth0Provider } from '@auth0/auth0-react';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import { BrowserRouter } from 'react-router-dom';
 import { Pages } from './pages';
+import { ApplicationTheme } from './theme';
 
 function App() {
   return (
@@ -11,7 +13,10 @@ function App() {
         redirectUri={window.location.origin}
         cacheLocation='localstorage'
         useRefreshTokens>
-        <Pages />
+        <ThemeProvider theme={ApplicationTheme}>
+          <CssBaseline enableColorScheme />
+          <Pages />
+        </ThemeProvider>
       </Auth0Provider>
     </BrowserRouter>
   );

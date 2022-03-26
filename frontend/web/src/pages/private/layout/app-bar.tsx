@@ -1,4 +1,3 @@
-import { useAuth0 } from '@auth0/auth0-react';
 import { AppBar as MuiAppBar, Box, Toolbar } from '@mui/material';
 import { UserMenu } from './user-menu';
 

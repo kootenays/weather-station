@@ -50,7 +50,7 @@ export const PrivateLayout: React.FC = () => {
             hideTooltip={drawerOpen}
           />
           <ListItemNav
-            to='/devices'
+            to='/admin/devices'
             primary='Devices'
             icon={<DeviceHubRounded />}
             hideTooltip={drawerOpen}
