@@ -25,13 +25,13 @@ const CustomNoResultsOverlay: React.FC = () => (
   </GridOverlay>
 );
 
-type SearchTableResultProps = {
+export type TableProps = {
   columns: GridColDef[];
   onRowDoubleClick?: (id: string) => void;
   data: any[];
 };
 
-export const SearchTableResult: React.FC<SearchTableResultProps> = ({
+export const Table: React.FC<TableProps> = ({
   data,
   columns,
   onRowDoubleClick,
