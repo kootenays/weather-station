@@ -53,8 +53,8 @@ export class ApiStack extends Stack {
       defaultAuthorizationType: ApiAuthorizationType.JWT,
       defaultAuthorizer: new HttpJwtAuthorizer(
         'Auth0Authorizer',
-        'https://myorg.us.auth0.com',
-        { jwtAudience: ['replace-with-client-id'] }
+        process.env.AUTH0_JWT_ISSUER || '',
+        { jwtAudience: [process.env.AUTH0_JWT_AUDIENCE || ''] }
       ),
       // The default is to provide access to our database. So make sure that
       // this is removed for any functions that do not require access.
@@ -69,6 +69,9 @@ export class ApiStack extends Stack {
     });
 
     api.addRoutes(this, {
+      'GET /devices': {
+        function: { handler: 'services/devices/list.main' },
+      },
       'POST /devices': {
         function: {
           handler: 'services/devices/create.main',
@@ -87,7 +90,7 @@ export class ApiStack extends Stack {
           ],
         },
       },
-      // Example for a public endpoint that does not require authentication
+      // List the sensor data for a device
       'GET /devices/{device_id}/data': {
         function: { handler: 'services/devices/data.main' },
         authorizationType: ApiAuthorizationType.NONE,
