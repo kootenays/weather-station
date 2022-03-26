@@ -1,5 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
-import { LogoutRounded, SettingsRounded } from '@mui/icons-material';
+import { LogoutRounded } from '@mui/icons-material';
 import {
   Box,
   IconButton,
@@ -15,27 +15,26 @@ import {
   Avatar,
 } from '@mui/material';
 import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
 
-const MenuItemWithIcon: React.FC<
-  {
-    Icon: React.ElementType<SvgIconProps>;
-    title: React.ReactNode;
-  } & MenuItemProps
-> = ({ Icon, title, ...props }) => {
-  return (
-    <MenuItem {...props}>
-      <ListItemIcon>
-        <Icon fontSize='small' />
-      </ListItemIcon>
-      <ListItemText>{title}</ListItemText>
-    </MenuItem>
-  );
-};
+// Uncommented until required
+// const MenuItemWithIcon: React.FC<
+//   {
+//     Icon: React.ElementType<SvgIconProps>;
+//     title: React.ReactNode;
+//   } & MenuItemProps
+// > = ({ Icon, title, ...props }) => {
+//   return (
+//     <MenuItem {...props}>
+//       <ListItemIcon>
+//         <Icon fontSize='small' />
+//       </ListItemIcon>
+//       <ListItemText>{title}</ListItemText>
+//     </MenuItem>
+//   );
+// };
 
 export const UserMenu: React.FC = () => {
   const { user, logout } = useAuth0();
-  // const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -49,12 +48,6 @@ export const UserMenu: React.FC = () => {
   const handleLogout = () => {
     handleClose();
     logout();
-  };
-
-  const goToSettings = () => {
-    handleClose();
-    console.log('navigate to user settings...');
-    // navigate('/settings');
   };
   if (!user) return null;
 
@@ -87,11 +80,6 @@ export const UserMenu: React.FC = () => {
           </Typography>
         </Box>
         <Divider sx={{ marginBottom: 1 }} />
-        <MenuItemWithIcon
-          Icon={SettingsRounded}
-          title='Settings'
-          onClick={goToSettings}
-        />
         <Box
           sx={{
             paddingTop: 1.5,

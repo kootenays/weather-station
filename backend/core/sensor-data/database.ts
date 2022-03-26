@@ -18,6 +18,7 @@ export class SensorDataTable extends DatabaseTable<
 
   /**
    * List sensor data by the device id
+   * @param deviceId the id of the device we are checking for
    */
   async listByDeviceId(deviceId: string) {
     const res = await this.kysely
