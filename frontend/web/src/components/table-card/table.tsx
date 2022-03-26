@@ -87,6 +87,7 @@ export const Table: React.FC<TableProps> = ({
       }}
       density='compact'
       rowHeight={60}
+      rowCount={25}
       onRowDoubleClick={handleRowDoubleClick}
     />
   );
