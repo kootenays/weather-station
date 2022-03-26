@@ -1,8 +1,9 @@
 import { RefreshRounded, VpnKeyRounded } from '@mui/icons-material';
-import { Box, Button, Card, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { DateTime } from 'luxon';
 import { TableCard } from '../../../../components';
 
+// Fake data until real one is shown
 const data = Array.from(Array(5)).map((_, index) => ({
   id: index,
   createdAt: DateTime.local()
@@ -15,6 +16,11 @@ const data = Array.from(Array(5)).map((_, index) => ({
   wind_direction: Math.round(Math.random() * 360),
 }));
 
+/**
+ * A page to show the details of a particular device. It should show the device
+ * details such as the name and allow users to generate new keys for this device
+ * as well as see the sensor data coming through.
+ */
 export const DeviceDetailPage: React.FC = () => {
   return (
     <div>

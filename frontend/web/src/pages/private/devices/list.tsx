@@ -1,15 +1,13 @@
 import { AddRounded, ArrowRightAltRounded } from '@mui/icons-material';
-import {
-  Button,
-  Card,
-  CardContent,
-  IconButton,
-  Typography,
-} from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import { DateTime } from 'luxon';
 import { Link } from 'react-router-dom';
 import { TableCard } from '../../../components';
 
+/**
+ * A page to show a list of all the devices that is allowed to be viewed by the
+ * current user.
+ */
 export const DeviceListPage: React.FC = () => {
   return (
     <div>
