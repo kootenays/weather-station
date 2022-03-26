@@ -12,7 +12,7 @@ export const TableCard: React.FC<TableCardProps> = ({
   ...tableProps
 }) => {
   return (
-    <Card>
+    <Card sx={{ display: 'flex', flexDirection: 'column' }}>
       <CardContent sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography variant='overline'>{title}</Typography>
         {Action}

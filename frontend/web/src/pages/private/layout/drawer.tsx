@@ -58,7 +58,7 @@ export const MainContainer = styled('main')<{ open: boolean }>(
   })
 );
 
-export const Container = styled(MuiContainer)({
+export const Container = styled(MuiContainer)(({ theme }) => ({
   position: 'relative',
   // Set the height to be 100% minus the toolbar
   height: `calc(100% - 64px)`,
@@ -67,4 +67,5 @@ export const Container = styled(MuiContainer)({
   '& > div': {
     flex: 1,
   },
-});
+  paddingBottom: theme.spacing(2),
+}));

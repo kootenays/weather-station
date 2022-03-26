@@ -93,7 +93,7 @@ ApplicationTheme.components = {
   },
   MuiDataGrid: {
     styleOverrides: {
-      root: { borderRadius: 0, minHeight: 300, height: '100%' },
+      root: { borderRadius: 0 },
       cell: { '&:focus': { outline: 'none' } },
       columnSeparator: { display: 'none' },
     },

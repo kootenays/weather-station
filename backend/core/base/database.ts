@@ -15,7 +15,7 @@ export class DatabaseTable<
 > {
   protected readonly kysely: Kysely<TDatabase>;
 
-  constructor(private tableName: TTableName) {
+  constructor(protected readonly tableName: TTableName) {
     this.kysely = new Kysely<TDatabase>({
       dialect: new DataApiDialect({
         mode: 'postgres',
@@ -136,7 +136,7 @@ export class DatabaseTable<
    * before it gets inserted back in, or updated.
    * @param item The item to push in
    */
-  private beforeDBTransform<
+  protected beforeDBTransform<
     TAfterItem extends Updateable<TDatabase[TTableName]>
   >(item: TItem): TAfterItem {
     return item as any as TAfterItem;
@@ -147,7 +147,7 @@ export class DatabaseTable<
    * the interface as required for usage
    * @param databaseItem The raw database item
    */
-  private afterDBTransform(
+  protected afterDBTransform(
     databaseItem: Awaited<Selectable<TDatabase[TTableName]>>
   ): TItem {
     return databaseItem as any as TItem;

@@ -29,12 +29,14 @@ export type TableProps = {
   columns: GridColDef[];
   onRowDoubleClick?: (id: string) => void;
   data: any[];
+  loading?: boolean;
 };
 
 export const Table: React.FC<TableProps> = ({
   data,
   columns,
   onRowDoubleClick,
+  loading,
 }) => {
   const navigate = useNavigate();
   const handleRowDoubleClick: GridEventListener<GridEvents.rowDoubleClick> = ({
@@ -89,6 +91,7 @@ export const Table: React.FC<TableProps> = ({
       rowHeight={60}
       rowCount={25}
       onRowDoubleClick={handleRowDoubleClick}
+      loading={loading}
     />
   );
 };

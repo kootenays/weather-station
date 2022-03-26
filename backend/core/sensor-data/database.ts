@@ -1,3 +1,4 @@
+import { sql } from 'kysely';
 import { DatabaseTable } from '../base';
 import { SensorData } from './interfaces';
 
@@ -13,5 +14,18 @@ export class SensorDataTable extends DatabaseTable<
 > {
   constructor() {
     super(DEFAULT_SENSOR_DATA_TABLE_NAME);
+  }
+
+  /**
+   * List sensor data by the device id
+   */
+  async listByDeviceId(deviceId: string) {
+    const res = await this.kysely
+      .selectFrom(this.tableName)
+      .selectAll()
+      .where('device_id', '=', sql`${deviceId}::uuid`)
+      .execute();
+
+    return res.map(this.afterDBTransform);
   }
 }

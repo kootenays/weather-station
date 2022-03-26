@@ -5,7 +5,7 @@ import { HomePage } from './home';
 export const PrivateRoutes: RouteProps[] = [
   { index: true, element: <HomePage /> },
   { path: 'devices', element: <DeviceListPage /> },
-  { path: 'devices/:id', element: <DeviceDetailPage /> },
+  { path: 'devices/:deviceId', element: <DeviceDetailPage /> },
 ];
 
 export { PrivateLayout } from './layout';

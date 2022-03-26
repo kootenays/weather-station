@@ -1,4 +1,4 @@
-import { Auth0Client } from '@auth0/auth0-spa-js';
+import { Auth0Client, Auth0ClientOptions } from '@auth0/auth0-spa-js';
 import axios from 'axios';
 
 // AWS Configurations
@@ -11,25 +11,27 @@ const defaultHeaders = {
   'Content-Type': 'application/json',
 };
 
-const client = new Auth0Client({
+export const DEFAULT_AUTH0_OPTIONS: Auth0ClientOptions = {
   domain: process.env.REACT_APP_AUTH0_DOMAIN || '',
   client_id: process.env.REACT_APP_AUTH0_CLIENT_ID || '',
   redirect_uri: window.location.origin,
   cacheLocation: 'localstorage',
   useRefreshTokens: true,
-});
+};
+
+const client = new Auth0Client(DEFAULT_AUTH0_OPTIONS);
 
 /**
  * Use to request data from the private API
  */
-export const PrivateApi = axios.create({
+export const PrivateApiClient = axios.create({
   baseURL: API_ENDPOINT,
   timeout: API_TIMEOUT,
   headers: defaultHeaders,
 });
 
-// Make sure to get the token each time.
-PrivateApi.interceptors.request.use(async (config) => {
+// Make sure to get the token each time before making the request
+PrivateApiClient.interceptors.request.use(async (config) => {
   try {
     const tokens = await client.getIdTokenClaims();
     config.headers = {
@@ -45,7 +47,7 @@ PrivateApi.interceptors.request.use(async (config) => {
 /**
  * Use to request data from the public API
  */
-export const PublicApi = axios.create({
+export const PublicApiClient = axios.create({
   baseURL: API_ENDPOINT,
   headers: defaultHeaders,
   timeout: API_TIMEOUT,
