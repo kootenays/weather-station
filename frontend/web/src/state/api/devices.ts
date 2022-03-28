@@ -13,6 +13,17 @@ export const DevicesApi = {
     return res.data.data;
   },
   /**
+   * Generate the certificates for a particular device
+   * @param deviceId The device to generate the certificate for
+   * @returns
+   */
+  createCertificates: async (deviceId: string) => {
+    const res = await PrivateApiClient.post<
+      ApiResponse<{ pem: string; privateKey: string; publicKey: string }>
+    >(`devices/${deviceId}/certificates`, {});
+    return res.data.data;
+  },
+  /**
    * List all devices that you are allowed to see
    */
   list: async () => {

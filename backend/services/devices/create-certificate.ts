@@ -1,6 +1,6 @@
 import { APIGatewayProxyHandlerV2WithJWTAuthorizer } from 'aws-lambda';
 import { DevicesTable } from 'core/devices';
-import { Iot } from 'aws-sdk';
+import { Iot, AWSError } from 'aws-sdk';
 
 const DevicesClient = new DevicesTable();
 const IotClient = new Iot();
@@ -59,40 +59,59 @@ export const main: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (
   // Get the AWS ACCOUNT ID from the context so it will only create it in the
   // same account as one that invoked this Lambda Function.
   const AWS_ACCOUNT_ID = context.invokedFunctionArn.split(':')[4];
-  // Create the Access Policy to allow a device to connect, subscribe, receive
-  // and publish data from a defined topic `devices/${device_id}/data`.
-  const policy = await IotClient.createPolicy({
-    policyName: `policy-${device.id}`,
-    policyDocument: `{
-      "Version": "2012-10-17",
-      "Statement": [
-        {
-          "Effect": "Allow",
-          "Action": "iot:Connect",
-          "Resource": "arn:aws:iot:${AWS_REGION}:${AWS_ACCOUNT_ID}:client/${device.id}"
-        },
-        {
-          "Effect": "Allow",
-          "Action": "iot:Subscribe",
-          "Resource": "arn:aws:iot:${AWS_REGION}:${AWS_ACCOUNT_ID}:topicfilter/devices/${device.id}/data"
-        },
-        {
-          "Effect": "Allow",
-          "Action": "iot:Receive",
-          "Resource": "arn:aws:iot:${AWS_REGION}:${AWS_ACCOUNT_ID}:topic/devices/${device.id}/data"
-        },
-        {
-          "Effect": "Allow",
-          "Action": "iot:Publish",
-          "Resource": "arn:aws:iot:${AWS_REGION}:${AWS_ACCOUNT_ID}:topic/devices/${device.id}/data"
-        }
-      ]
-    }`,
-  }).promise();
+
+  let policyName: string;
+  try {
+    // Create the Access Policy to allow a device to connect, subscribe, receive
+    // and publish data from a defined topic `devices/${device_id}/data`.
+    const policy = await IotClient.createPolicy({
+      policyName: `policy-${device.id}`,
+      policyDocument: `{
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": "iot:Connect",
+            "Resource": "arn:aws:iot:${AWS_REGION}:${AWS_ACCOUNT_ID}:client/${device.id}"
+          },
+          {
+            "Effect": "Allow",
+            "Action": "iot:Subscribe",
+            "Resource": "arn:aws:iot:${AWS_REGION}:${AWS_ACCOUNT_ID}:topicfilter/devices/${device.id}/data"
+          },
+          {
+            "Effect": "Allow",
+            "Action": "iot:Receive",
+            "Resource": "arn:aws:iot:${AWS_REGION}:${AWS_ACCOUNT_ID}:topic/devices/${device.id}/data"
+          },
+          {
+            "Effect": "Allow",
+            "Action": "iot:Publish",
+            "Resource": "arn:aws:iot:${AWS_REGION}:${AWS_ACCOUNT_ID}:topic/devices/${device.id}/data"
+          }
+        ]
+      }`,
+    }).promise();
+    policyName = policy.policyName ?? '';
+  } catch (error) {
+    // If a policy with the same name already exists, then just use the same
+    // one, instead of creating a new one.
+    if ((error as AWSError).code === 'ResourceAlreadyExistsException') {
+      policyName = `policy-${device.id}`;
+    } else {
+      // Otherwise return as an error
+      return {
+        statusCode: 500,
+        body: JSON.stringify({
+          message: (error as AWSError).message,
+        }),
+      };
+    }
+  }
 
   // Attach that policy to the certificate
   await IotClient.attachPolicy({
-    policyName: policy.policyName ?? '',
+    policyName: policyName ?? '',
     target: certificate.certificateArn ?? '',
   }).promise();
 
