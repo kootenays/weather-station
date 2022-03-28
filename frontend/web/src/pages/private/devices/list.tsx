@@ -3,7 +3,7 @@ import { AddRounded, ArrowRightAltRounded } from '@mui/icons-material';
 import { Button, IconButton } from '@mui/material';
 import { DateTime } from 'luxon';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { TableCard } from '../../../components';
 import { useDevicesApi } from '../../../state';
 
@@ -17,6 +17,7 @@ const formatSqlDateToString = ({ value }: { value: any }): string => {
  * current user.
  */
 export const DeviceListPage: React.FC = () => {
+  const navigate = useNavigate();
   const DevicesApi = useDevicesApi();
 
   const [devices, setDevices] = useState<Device[]>([]);
@@ -39,12 +40,20 @@ export const DeviceListPage: React.FC = () => {
     setLoading(false);
   };
 
+  const onCreate = () => {
+    navigate('create');
+  };
+
   return (
     <TableCard
       title='Devices'
       Action={
-        <Button variant='outlined' size='small' startIcon={<AddRounded />}>
-          Add Device
+        <Button
+          variant='outlined'
+          size='small'
+          startIcon={<AddRounded />}
+          onClick={onCreate}>
+          Create Device
         </Button>
       }
       columns={[
