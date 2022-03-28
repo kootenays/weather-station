@@ -6,9 +6,9 @@ export const DevicesApi = {
   /**
    * Create a single device
    */
-  create: async (): Promise<Device | null> => {
+  create: async (name: string): Promise<Device | null> => {
     const res = await PrivateApiClient.post<ApiResponse<Device>>('devices', {
-      name: '',
+      name,
     });
     return res.data.data;
   },

@@ -1,5 +1,5 @@
 import { Auth0Client, Auth0ClientOptions } from '@auth0/auth0-spa-js';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 // AWS Configurations
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT;
@@ -43,6 +43,20 @@ PrivateApiClient.interceptors.request.use(async (config) => {
   }
   return config;
 });
+
+PrivateApiClient.interceptors.response.use(
+  undefined,
+  async (error: AxiosError) => {
+    if (error.isAxiosError) {
+      // If the response provided a better error message, use that instead of
+      // the default
+      if (error.response?.data.message) {
+        return Promise.reject(new Error(error.response.data.message));
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 
 /**
  * Use to request data from the public API
