@@ -1,7 +1,6 @@
 import { LoadingButton } from '@mui/lab';
 import {
   Alert,
-  Button,
   Card,
   CardActions,
   CardContent,
@@ -11,6 +10,7 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 import { SubmitHandler, useForm, useFormState } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { useDevicesApi } from '../../../state';
 
 type Inputs = {
@@ -18,6 +18,7 @@ type Inputs = {
 };
 
 export const CreateDevicePage: React.FC = () => {
+  const navigate = useNavigate();
   const { create } = useDevicesApi();
   const { control, handleSubmit, register } = useForm<Inputs>({
     defaultValues: { name: '' },
@@ -27,11 +28,14 @@ export const CreateDevicePage: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
     setLoading(true);
     try {
       const res = await create(data.name);
-      console.log(res);
+      if (!res) {
+        throw new Error('Something went wrong');
+      }
+      navigate(`/admin/devices/${res.id}`);
+      return;
     } catch (error) {
       console.error(error);
       setErrorMessage((error as Error).message);

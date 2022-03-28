@@ -1,1 +1,2 @@
-export const DEFAULT_USERS_TABLE_NAME = 'users';
+export * from './database';
+export * from './interfaces';
