@@ -28,7 +28,6 @@ export const main: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (evt) => {
   }
 
   let user = await UsersClient.getUserBySub(sub as string);
-  console.log(user);
 
   // TODO: Remove this and actually add using a Webhook with Auth0 instead.
   // But for now, if sub doesn't exist, then automatically create a new user
@@ -38,7 +37,6 @@ export const main: APIGatewayProxyHandlerV2WithJWTAuthorizer = async (evt) => {
       evt.requestContext.authorizer.jwt.claims as JWTClaim,
       null
     );
-    console.log(user);
   }
 
   if (!body.name || !user) {

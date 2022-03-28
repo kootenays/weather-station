@@ -39,11 +39,6 @@ export class UsersTable extends DatabaseTable<
       .selectAll()
       .where(sql`${sub}`, '=', sql`ANY (subs)`)
       .limit(1)
-      .call((qb) => {
-        console.log(qb.compile().sql);
-        console.log(qb.compile().parameters);
-        return qb;
-      })
       .execute();
 
     return this.afterDBTransform(res[0]);
