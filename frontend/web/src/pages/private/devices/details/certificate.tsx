@@ -92,6 +92,7 @@ export const GenerateCertificateModal: React.FC<
 
   const getNewCertificates = async () => {
     if (!deviceId) return;
+    setErrorMessage('');
     setLoading(true);
     try {
       const res = await DevicesApi.createCertificates(deviceId);
