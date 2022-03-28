@@ -4,6 +4,7 @@ import {
   App,
   Function,
   RDS,
+  ReactStaticSite,
   Stack,
   StackProps,
 } from '@serverless-stack/resources';
@@ -59,6 +60,23 @@ export class StaticStack extends Stack {
         "SELECT topic(2) as device_id, timestamp() as timestamp, * FROM 'devices/+/data'"
       ),
       actions: [new LambdaFunctionAction(mqttHandlerFn)],
+    });
+
+    /*************************************************************************
+     * React Frontend
+     *************************************************************************/
+    const ROOT_DOMAIN_NAME = process.env.ROOT_DOMAIN_NAME ?? '';
+    const AUTH0_DOMAIN = (process.env.AUTH0_JWT_ISSUER ?? 'https:///').split(
+      '/'
+    )[2];
+    new ReactStaticSite(this, 'ReactWebApp', {
+      path: 'frontend/web',
+      customDomain: ROOT_DOMAIN_NAME,
+      environment: {
+        REACT_APP_AUTH0_DOMAIN: AUTH0_DOMAIN,
+        REACT_APP_AUTH0_CLIENT_ID: process.env.AUTH0_JWT_AUDIENCE ?? '',
+        REACT_APP_API_ENDPOINT: `api.${ROOT_DOMAIN_NAME}`,
+      },
     });
   }
 }

@@ -47,7 +47,7 @@ export const UserMenu: React.FC = () => {
 
   const handleLogout = () => {
     handleClose();
-    logout();
+    logout({ returnTo: window.location.origin });
   };
   if (!user) return null;
 
