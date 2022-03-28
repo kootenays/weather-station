@@ -5,6 +5,7 @@ type DevicesApiContext = typeof DevicesApi;
 
 const DEFAULT_DEVICES_CONTEXT: DevicesApiContext = {
   create: async () => null,
+  createCertificates: async () => ({ pem: '', privateKey: '', publicKey: '' }),
   list: async () => [],
   listData: async () => [],
 };

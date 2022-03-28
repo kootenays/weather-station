@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { TableCard } from '../../../../components';
 import { useDevicesApi } from '../../../../state';
+import { GenerateCertificateModal } from './certificate';
 
 /**
  * A page to show the details of a particular device. It should show the device
@@ -18,6 +19,8 @@ export const DeviceDetailPage: React.FC = () => {
 
   const [data, setData] = useState<SensorData[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [certificateModalOpen, setCertificateModalOpen] =
+    useState<boolean>(false);
 
   // Load data on mount
   useEffect(() => {
@@ -37,9 +40,14 @@ export const DeviceDetailPage: React.FC = () => {
     setLoading(false);
   };
 
-  const onClick = () => {
-    console.log('click');
+  const onGenerateCertificate = () => {
+    setCertificateModalOpen(true);
   };
+
+  const onCancelModal = () => {
+    setCertificateModalOpen(false);
+  };
+
   return (
     <>
       <Box
@@ -53,7 +61,7 @@ export const DeviceDetailPage: React.FC = () => {
             variant='outlined'
             color='info'
             startIcon={<VpnKeyRounded />}
-            onClick={onClick}>
+            onClick={onGenerateCertificate}>
             Generate certificates
           </Button>
         </div>
@@ -88,6 +96,11 @@ export const DeviceDetailPage: React.FC = () => {
         ]}
         data={data}
         loading={loading}
+      />
+      <GenerateCertificateModal
+        deviceId={deviceId || ''}
+        open={certificateModalOpen}
+        onCancel={onCancelModal}
       />
     </>
   );
