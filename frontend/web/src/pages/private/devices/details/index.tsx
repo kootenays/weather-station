@@ -98,7 +98,7 @@ export const DeviceDetailPage: React.FC = () => {
         loading={loading}
       />
       <GenerateCertificateModal
-        deviceId={deviceId || ''}
+        deviceId={deviceId}
         open={certificateModalOpen}
         onCancel={onCancelModal}
       />
