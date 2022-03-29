@@ -75,7 +75,7 @@ export class StaticStack extends Stack {
       environment: {
         REACT_APP_AUTH0_DOMAIN: AUTH0_DOMAIN,
         REACT_APP_AUTH0_CLIENT_ID: process.env.AUTH0_JWT_AUDIENCE ?? '',
-        REACT_APP_API_ENDPOINT: `api.${ROOT_DOMAIN_NAME}`,
+        REACT_APP_API_ENDPOINT: `https://api.${ROOT_DOMAIN_NAME}`,
       },
     });
   }
