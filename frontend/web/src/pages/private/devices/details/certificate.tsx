@@ -130,6 +130,14 @@ export const GenerateCertificateModal: React.FC<
         </Alert>
         <List>
           <FileDownloadListItem
+            title='Device certificate'
+            subtitle={`${deviceId}.pem.crt`}
+            disabled={loading || !certificates.pem}
+            filecontent={certificates.pem}
+            filename={`${deviceId}.pem.crt`}
+          />
+          <Divider />
+          <FileDownloadListItem
             title='Public key file'
             subtitle={`${deviceId}.public.pem.key`}
             disabled={loading || !certificates.publicKey}
